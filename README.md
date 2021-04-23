@@ -45,8 +45,3 @@ Tools / Technologies Used:
 •	Cryptography: for security purposes
 •	Git & Github: Project management
 
-
-References
-•	https://medium.com/programmers-blockchain/create-simple-blockchain-java-tutorial-from-scratch-6eeed3cb03fa
-•	https://www.baeldung.com/java-blockchain
-•	https://www.youtube.com/watch?v=bBC-nXj3Ng4
