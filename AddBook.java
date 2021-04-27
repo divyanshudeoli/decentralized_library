@@ -1,12 +1,15 @@
+package source;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.util.*;
+import java.awt.event.*;
+import java.sql.*;
 
-public class AddBook extends JFrame {
+public class AddBook extends JFrame implements ActionListener {
 
     private JPanel contentPane;
-    private JTextField t1,t2,t3,t4,t5,t6,t11,t12,t13,t14,t15,t16,t17;
+    private JTextField tbookid,tname,tgenre,tpublisher,tprice,tx,tuid,tauthor,tisbn,tedition,tlang,ty,tpg;
     private JButton button1,button2;
     JComboBox comboBox;
     
@@ -66,7 +69,7 @@ public class AddBook extends JFrame {
 		l14.setBounds(330, 216, 90, 22);
 		contentPane.add(l14);
 
-		JLabel l5 = new JLabel("Location: X");
+		/*JLabel l5 = new JLabel("Location: X");
 		l5.setForeground(new Color(0,0,0));
 		l5.setFont(new Font("Tahoma", Font.BOLD, 14));
 		l5.setBounds(60, 249, 90, 22);
@@ -76,7 +79,7 @@ public class AddBook extends JFrame {
 		l9.setForeground(new Color(0,0,0));
 		l9.setFont(new Font("Tahoma", Font.BOLD, 14));
 		l9.setBounds(330, 249, 90, 22);
-		contentPane.add(l9);
+		contentPane.add(l9);*/
 
 		JLabel l6 = new JLabel("Book_id");
 		l6.setForeground(new Color(0,0,0));
@@ -102,97 +105,97 @@ public class AddBook extends JFrame {
 		l12.setBounds(330, 183, 90, 22);
 		contentPane.add(l12);
 
-		t1 = new JTextField();
-		t1.setForeground(new Color(0,0,0));
-		t1.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t1.setBounds(160, 54, 100, 20);
-		contentPane.add(t1);
-		t1.setColumns(10);
+		tbookid = new JTextField();
+		tbookid.setForeground(new Color(0,0,0));
+		tbookid.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tbookid.setBounds(160, 54, 100, 20);
+		contentPane.add(tbookid);
+		tbookid.setColumns(10);
 
-		t2 = new JTextField();
-		t2.setForeground(new Color(0,0,0));
-		t2.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t2.setColumns(10);
-		t2.setBounds(160, 87, 100, 20);
-		contentPane.add(t2);
+		tname = new JTextField();
+		tname.setForeground(new Color(0,0,0));
+		tname.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tname.setColumns(10);
+		tname.setBounds(160, 87, 100, 20);
+		contentPane.add(tname);
 
-		t3 = new JTextField();
-		t3.setForeground(new Color(0,0,0));
-		t3.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t3.setColumns(10);
-		t3.setBounds(160, 120, 100, 20);
-		contentPane.add(t3);
+		tgenre = new JTextField();
+		tgenre.setForeground(new Color(0,0,0));
+		tgenre.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tgenre.setColumns(10);
+		tgenre.setBounds(160, 120, 100, 20);
+		contentPane.add(tgenre);
 
-		t4 = new JTextField();
-		t4.setForeground(new Color(0,0,0));
-		t4.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t4.setColumns(10);
-		t4.setBounds(160, 153, 100, 20);
-		contentPane.add(t4);
+		tpublisher = new JTextField();
+		tpublisher.setForeground(new Color(0,0,0));
+		tpublisher.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tpublisher.setColumns(10);
+		tpublisher.setBounds(160, 153, 100, 20);
+		contentPane.add(tpublisher);
 
-		t5 = new JTextField();
-		t5.setForeground(new Color(0,0,0));
-		t5.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t5.setColumns(10);
-		t5.setBounds(160, 219, 100, 20);
-		contentPane.add(t5);
+		tprice = new JTextField();
+		tprice.setForeground(new Color(0,0,0));
+		tprice.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tprice.setColumns(10);
+		tprice.setBounds(160, 219, 100, 20);
+		contentPane.add(tprice);
 
-		t6 = new JTextField();
-		t6.setForeground(new Color(0,0,0));
-		t6.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t6.setColumns(10);
-		t6.setBounds(160, 252, 100, 20);
-		contentPane.add(t6);
+		/*tx = new JTextField();
+		tx.setForeground(new Color(0,0,0));
+		tx.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tx.setColumns(10);
+		tx.setBounds(160, 252, 100, 20);
+		contentPane.add(tx);*/
 
 
-		t11 = new JTextField();
-		t11.setForeground(new Color(0,0,0));
-		t11.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t11.setBounds(400, 54, 100, 20);
-		contentPane.add(t11);
-		t11.setColumns(10);
+		tuid = new JTextField();
+		tuid.setForeground(new Color(0,0,0));
+		tuid.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tuid.setBounds(400, 54, 100, 20);
+		contentPane.add(tuid);
+		tuid.setColumns(10);
 
-		t12 = new JTextField();
-		t12.setForeground(new Color(0,0,0));
-		t12.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t12.setColumns(10);
-		t12.setBounds(400, 87, 100, 20);
-		contentPane.add(t12);
+		tauthor = new JTextField();
+		tauthor.setForeground(new Color(0,0,0));
+		tauthor.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tauthor.setColumns(10);
+		tauthor.setBounds(400, 87, 100, 20);
+		contentPane.add(tauthor);
 
-		t13 = new JTextField();
-		t13.setForeground(new Color(0,0,0));
-		t13.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t13.setColumns(10);
-		t13.setBounds(400, 120, 100, 20);
-		contentPane.add(t13);
+		tisbn = new JTextField();
+		tisbn.setForeground(new Color(0,0,0));
+		tisbn.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tisbn.setColumns(10);
+		tisbn.setBounds(400, 120, 100, 20);
+		contentPane.add(tisbn);
 
-		t14 = new JTextField();
-		t14.setForeground(new Color(0,0,0));
-		t14.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t14.setColumns(10);
-		t14.setBounds(400, 153, 100, 20);
-		contentPane.add(t14);
+		tedition = new JTextField();
+		tedition.setForeground(new Color(0,0,0));
+		tedition.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tedition.setColumns(10);
+		tedition.setBounds(400, 153, 100, 20);
+		contentPane.add(tedition);
 
-		t15 = new JTextField();
-		t15.setForeground(new Color(0,0,0));
-		t15.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t15.setColumns(10);
-		t15.setBounds(400, 219, 100, 20);
-		contentPane.add(t15);
+		tlang = new JTextField();
+		tlang.setForeground(new Color(0,0,0));
+		tlang.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tlang.setColumns(10);
+		tlang.setBounds(400, 219, 100, 20);
+		contentPane.add(tlang);
 
-		t16 = new JTextField();
-		t16.setForeground(new Color(0,0,0));
-		t16.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t16.setColumns(10);
-		t16.setBounds(400, 252, 100, 20);
-		contentPane.add(t16);
+		/*ty = new JTextField();
+		ty.setForeground(new Color(0,0,0));
+		ty.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		ty.setColumns(10);
+		ty.setBounds(400, 252, 100, 20);
+		contentPane.add(ty);*/
 
-		t17 = new JTextField();
-		t17.setForeground(new Color(0,0,0));
-		t17.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		t17.setColumns(10);
-		t17.setBounds(400, 186, 100, 20);
-		contentPane.add(t17);
+		tpg = new JTextField();
+		tpg.setForeground(new Color(0,0,0));
+		tpg.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tpg.setColumns(10);
+		tpg.setBounds(400, 186, 100, 20);
+		contentPane.add(tpg);
 
 		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "New", "Fine", "Very Good",
@@ -203,10 +206,11 @@ public class AddBook extends JFrame {
 	    button1 = new JButton("Add");
 		button1.setBorder(new CompoundBorder(new LineBorder(new Color(128, 128, 128)), null));
 	    button1.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
-		button1.setBounds(180, 300, 60, 33);
+		button1.setBounds(180, 300, 108, 33);
 	    button1.setBackground(Color.BLACK);
 	    button1.setForeground(Color.WHITE);
 		contentPane.add(button1);
+		button1.addActionListener(this);
 
 		button2 = new JButton("Back");
 		button2.setBorder(new CompoundBorder(new LineBorder(new Color(105, 105, 105)), null));
@@ -214,9 +218,61 @@ public class AddBook extends JFrame {
 		button2.setBounds(330, 300, 108, 33);
 	    button2.setBackground(Color.BLACK);
 	    button2.setForeground(Color.WHITE);
+		button2.addActionListener(this);
 
 		contentPane.add(button2);
 		random();
+    }
+
+    public void actionPerformed(ActionEvent ae){
+    	try{
+    		conn con=new conn();
+    		if(ae.getSource()==button1){
+
+    			String sql = "insert into book(Book_id, Name, ISBN, Publisher,Condit, Price, Pages, User_id, Genre, Language, Author, Edition) values(?,?,?,?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				
+				PreparedStatement st = con.c.prepareStatement(sql);
+				st.setString(1, tbookid.getText());
+				st.setString(2, tname.getText());
+				st.setString(3, tisbn.getText());
+				st.setString(4, tpublisher.getText());
+				st.setString(5, (String) comboBox.getSelectedItem());
+				st.setString(6, tprice.getText());
+				st.setString(7, tpg.getText());
+				st.setString(8, tuid.getText());
+				st.setString(9, tgenre.getText());
+				st.setString(10, tlang.getText());
+				st.setString(11, tauthor.getText());
+				st.setString(12, tedition.getText());
+				
+
+
+				int rs = st.executeUpdate();
+				if (rs > 0)
+		                    JOptionPane.showMessageDialog(null, "Successfully Added");
+				else
+		                    JOptionPane.showMessageDialog(null, "Error");
+		                tuid.setText("");
+		                tbookid.setText("");
+		                tauthor.setText("");
+		                tedition.setText("");
+		                tpg.setText("");
+		                tprice.setText("");
+		                tpublisher.setText("");
+		                tlang.setText("");
+		                tgenre.setText("");
+		                tisbn.setText("");
+		                tname.setText("");
+				st.close();
+
+    		}
+    	if(ae.getSource()==button2){
+    		this.setVisible(false);
+    		new menu().setVisible(true);
+    	}
+
+    	}
+    	catch(Exception e){System.out.println(e);}
     }
 
     public static void main(String[] args) {
@@ -225,7 +281,7 @@ public class AddBook extends JFrame {
 
     public void random() {
         Random rd = new Random();
-		t1.setText("" + rd.nextInt(10000 + 1));
+		tbookid.setText("" + rd.nextInt(10000 + 1));
     }
    
 }

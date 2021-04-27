@@ -1,9 +1,13 @@
+package source;
+
+import java.sql.*;
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import javax.swing.border.*;
 
-public class signup extends JFrame {
+public class signup extends JFrame implements ActionListener {
 
     private JPanel contentPane;
     private JTextField textField;
@@ -101,7 +105,7 @@ public class signup extends JFrame {
 		contentPane.add(textField_6);
 
 		b1 = new JButton("Create");
-		//b1.addActionListener(this);
+		b1.addActionListener(this);
 		b1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		b1.setBounds(140, 289, 100, 30);
 	    b1.setBackground(Color.BLACK);
@@ -109,21 +113,13 @@ public class signup extends JFrame {
 		contentPane.add(b1);
 
 		b2 = new JButton("Back");
-		//b2.addActionListener(this);
+		b2.addActionListener(this);
 		b2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		b2.setBounds(300, 289, 100, 30);
 		b2.setBackground(Color.BLACK);
 	    b2.setForeground(Color.WHITE);
 		contentPane.add(b2);
 		random();
-/*
-		JPanel panel = new JPanel();
-		panel.setForeground(new Color(34, 139, 34));
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 0), 2), "Create-Account",
-				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(34, 139, 34)));
-		panel.setBounds(31, 46, 476, 296);
-	        panel.setBackground(Color.WHITE);
-		contentPane.add(panel);*/
     }
 
     public void random() {
@@ -131,37 +127,34 @@ public class signup extends JFrame {
 		textField.setText("" + rd.nextInt(1000000 + 1));
     }
     
-    /*public void actionPerformed(ActionEvent ae){
+    public void actionPerformed(ActionEvent ae){
         try{
             conn con = new conn();
             
             if(ae.getSource() == b1){
-                String sql = "insert into account(username, name, password, sec_q, sec_ans) values(?, ?, ?, ?, ?)";
-		PreparedStatement st = con.c.prepareStatement(sql);
+                String sql = "insert into account(User_name, name, password, sec_q, sec_ans) values(?, ?, ?, ?, ?)";
+				PreparedStatement st = con.c.prepareStatement(sql);
 
-		st.setString(1, textField.getText());
-                st.setString(2, textField_1.getText());
-		st.setString(3, textField_2.getText());
-		st.setString(4, (String) comboBox.getSelectedItem());
-		st.setString(5, textField_3.getText());
+				st.setString(1, textField.getText());
+		        st.setString(2, textField_1.getText());
+				st.setString(3, textField_2.getText());
+				st.setString(4, (String) comboBox.getSelectedItem());
+				st.setString(5, textField_3.getText());
 
-		int i = st.executeUpdate();
-		if (i > 0){
-                    JOptionPane.showMessageDialog(null, "successfully Created");
-                }
+				int i = st.executeUpdate();
+				if (i > 0){
+		            JOptionPane.showMessageDialog(null, "successfully Created");
+		                }
+		        textField.setText("");
+		        textField_1.setText("");
+				textField_2.setText("");
+				textField_3.setText("");
+		         }
 
-                textField.setText("");
-                textField_1.setText("");
-		textField_2.setText("");
-		textField_3.setText("");
-            }
-            if(ae.getSource() == b2){
-                this.setVisible(false);
-		new Login_user().setVisible(true);
-			
-            }
-        }catch(Exception e){
-            
-        }
-    }*/
+		    if(ae.getSource() == b2){
+		            this.setVisible(false);
+					new login().setVisible(true);
+		        }
+		        }catch(Exception e){}
+    		}
 }
