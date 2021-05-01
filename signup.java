@@ -6,20 +6,18 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import javax.swing.border.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException; 
+
 
 public class signup extends JFrame implements ActionListener {
 
     private JPanel contentPane;
-    private JTextField textField;
-    private JTextField textField_1;
-    private JTextField textField_2;
-    private JTextField textField_3;
-    private JTextField textField_4;
-    private JTextField textField_5;
-    private JTextField textField_6;
+    private JTextField textFieldid,textFieldname,textFieldpassword,textFieldcontact,
+    						textFieldpassphrase, textFieldx, textFieldy;
     private JButton b1, b2;
     private JComboBox comboBox;
-
+    private int id;
 
     public static void main(String[] args) {
         new signup().setVisible(true);
@@ -69,40 +67,40 @@ public class signup extends JFrame implements ActionListener {
 		lblSecuritypassphrase.setBounds(99, 197, 140, 26);
 		contentPane.add(lblSecuritypassphrase);
 
-	    textField_4 = new JTextField();
-		textField_4.setBounds(265, 202, 148, 20);
-		contentPane.add(textField_4);
-		textField_4.setColumns(10);
+	    textFieldpassphrase = new JTextField();
+		textFieldpassphrase.setBounds(265, 202, 148, 20);
+		contentPane.add(textFieldpassphrase);
+		textFieldpassphrase.setColumns(10);
 
-	    textField = new JTextField();
-		textField.setBounds(265, 91, 148, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+	    textFieldid = new JTextField();
+		textFieldid.setBounds(265, 91, 148, 20);
+		contentPane.add(textFieldid);
+		textFieldid.setColumns(10);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(265, 128, 148, 20);
-		contentPane.add(textField_1);
+		textFieldname = new JTextField();
+		textFieldname.setColumns(10);
+		textFieldname.setBounds(265, 128, 148, 20);
+		contentPane.add(textFieldname);
 
-	    textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(265, 165, 148, 20);
-		contentPane.add(textField_2);
+	    textFieldpassword = new JTextField();
+		textFieldpassword.setColumns(10);
+		textFieldpassword.setBounds(265, 165, 148, 20);
+		contentPane.add(textFieldpassword);
 
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(265, 239, 148, 20);
-		contentPane.add(textField_3);
+		textFieldcontact = new JTextField();
+		textFieldcontact.setColumns(10);
+		textFieldcontact.setBounds(265, 239, 148, 20);
+		contentPane.add(textFieldcontact);
 
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(235, 49, 118, 20);
-		contentPane.add(textField_5);
+		textFieldx = new JTextField();
+		textFieldx.setColumns(10);
+		textFieldx.setBounds(235, 49, 118, 20);
+		contentPane.add(textFieldx);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(360, 49, 118, 20);
-		contentPane.add(textField_6);
+		textFieldy = new JTextField();
+		textFieldy.setColumns(10);
+		textFieldy.setBounds(360, 49, 118, 20);
+		contentPane.add(textFieldy);
 
 		b1 = new JButton("Create");
 		b1.addActionListener(this);
@@ -119,36 +117,64 @@ public class signup extends JFrame implements ActionListener {
 		b2.setBackground(Color.BLACK);
 	    b2.setForeground(Color.WHITE);
 		contentPane.add(b2);
-		random();
+		addid();
     }
 
-    public void random() {
-        Random rd = new Random();
-		textField.setText("" + rd.nextInt(1000000 + 1));
+    public void addid() {
+        try{
+        	conn con1=new conn();
+        	String sql="select max(User_id) from user";
+        	PreparedStatement st1=con1.c.prepareStatement(sql);
+        	ResultSet rs=st1.executeQuery();
+        	if(rs.next()){
+        		id =rs.getInt(1);
+        		id++;
+        		textFieldid.setText(""+id);
+        	}
+        }catch(Exception e){System.out.println(e);}
     }
     
+    String calculateBlockHash(String message){
+        StringBuffer buffer = new StringBuffer();
+        try{
+            	MessageDigest md = MessageDigest.getInstance("MD5");
+            	md.update(message.getBytes());
+              byte[] bytes= md.digest(); 
+              for(byte b : bytes)
+                buffer.append(String.format("%02x", b));
+        }
+        catch(NoSuchAlgorithmException ex){ System.out.println(ex);}
+    return buffer.toString();
+    }
+
     public void actionPerformed(ActionEvent ae){
         try{
             conn con = new conn();
             
             if(ae.getSource() == b1){
-                String sql = "insert into account(User_name, name, password, sec_q, sec_ans) values(?, ?, ?, ?, ?)";
+                String sql = "insert into user values (?, ?, ?, ?, ?, ?, ?, 0)";
 				PreparedStatement st = con.c.prepareStatement(sql);
 
-				st.setString(1, textField.getText());
-		        st.setString(2, textField_1.getText());
-				st.setString(3, textField_2.getText());
-				st.setString(4, (String) comboBox.getSelectedItem());
-				st.setString(5, textField_3.getText());
+				st.setString(1, textFieldid.getText());
+		        st.setString(2, textFieldname.getText());
+				st.setString(3, calculateBlockHash(textFieldpassword.getText()));
+				System.out.println(calculateBlockHash(textFieldpassword.getText()));
+				st.setString(4, textFieldpassphrase.getText());
+				st.setString(5, textFieldcontact.getText());
+				st.setString(6, textFieldx.getText());
+				st.setString(7, textFieldy.getText());
 
 				int i = st.executeUpdate();
 				if (i > 0){
 		            JOptionPane.showMessageDialog(null, "successfully Created");
 		                }
-		        textField.setText("");
-		        textField_1.setText("");
-				textField_2.setText("");
-				textField_3.setText("");
+		        textFieldid.setText("");
+		        textFieldname.setText("");
+				textFieldpassword.setText("");
+				textFieldcontact.setText("");
+				textFieldx.setText("");
+		        textFieldpassphrase.setText("");
+		        textFieldy.setText("");
 		         }
 
 		    if(ae.getSource() == b2){

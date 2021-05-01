@@ -10,23 +10,23 @@ import java.awt.event.*;
 public class menu extends JFrame implements ActionListener {
 
     private JPanel contentPane;
-    private JButton bvalid,bchain,bsearch,bprofile,baddbook;
-
-    public menu() {
+    private JButton brectran,bchain,bsearch,bprofile,baddbook;
+    private int uid;
+    public menu(int uid) {
+    	this.uid=uid;
         setBounds(600, 300, 600, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(76, 133, 199));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-
-		bvalid = new JButton("Validate");
-		bvalid.addActionListener(this);
-		bvalid.setFont(new Font("Tahoma", Font.BOLD, 15));
-		bvalid.setBounds(40, 80, 136, 65);
-	    bvalid.setBackground(Color.BLACK);
-	    bvalid.setForeground(Color.WHITE);
-		contentPane.add(bvalid);
+		brectran = new JButton("Transactions");
+		brectran.addActionListener(this);
+		brectran.setFont(new Font("Tahoma", Font.BOLD, 14));
+		brectran.setBounds(40, 80, 136, 65);
+	    brectran.setBackground(Color.BLACK);
+	    brectran.setForeground(Color.WHITE);
+		contentPane.add(brectran);
 
 		bchain = new JButton("View Chain");
 		bchain.addActionListener(this);
@@ -64,17 +64,30 @@ public class menu extends JFrame implements ActionListener {
     	try{
     		if(ae.getSource()==baddbook){
     			this.setVisible(false);
-    			new AddBook().setVisible(true);
+    			AddBook ab=new AddBook(uid);
+    			ab.setVisible(true);
     		}
     		if(ae.getSource()==bprofile){
     			this.setVisible(false);
-    			new profile(1).setVisible(true);
+    			profile prof=new profile(uid);
+    			prof.setVisible(true);
     		}
     		if(ae.getSource()==bsearch){
     			this.setVisible(false);
-    			new search().setVisible(true);
+    			search sear=new search(uid);
+    			sear.setVisible(true);
     		}
-    		
+
+    		if(ae.getSource()==brectran){
+    			this.setVisible(false);
+    			show_transaction shtr=new show_transaction(uid);
+    			shtr.setVisible(true);
+    		}
+    		if(ae.getSource()==bchain){
+    			this.setVisible(false);
+    			show_chain shchain=new show_chain(uid);
+    			shchain.setVisible(true);
+    		}
 
     	}
     	catch(Exception e){System.out.println(e);}
@@ -82,6 +95,6 @@ public class menu extends JFrame implements ActionListener {
     	}
 
     	public static void main(String[] args) {
-		new menu().setVisible(true);
+		
     }
 }

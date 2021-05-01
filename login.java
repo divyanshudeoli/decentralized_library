@@ -2,6 +2,9 @@ package source;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.sql.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class login extends JFrame implements ActionListener{
 
@@ -21,7 +24,7 @@ public class login extends JFrame implements ActionListener{
 	setContentPane(panel);
 	panel.setLayout(null);
 
-	JLabel l1 = new JLabel("Username : ");
+	JLabel l1 = new JLabel("User ID : ");
 	l1.setBounds(124, 89, 135, 34);
 	l1.setFont(new Font("Tahoma", Font.BOLD, 16));
 	panel.add(l1);
@@ -61,19 +64,50 @@ public class login extends JFrame implements ActionListener{
 	button2.addActionListener(this);
 
 	}
-        
-    public void actionPerformed(ActionEvent ae){
-    	try{
-    		if(ae.getSource()==button1){
+    
+	String calculateBlockHash(String message){
+        StringBuffer buffer = new StringBuffer();
+        try{
+            	MessageDigest md = MessageDigest.getInstance("MD5");
+            	md.update(message.getBytes());
+              byte[] bytes= md.digest(); 
+              for(byte b : bytes)
+                buffer.append(String.format("%02x", b));
+        }
+        catch(NoSuchAlgorithmException ex){ System.out.println(ex);}
+    return buffer.toString();
+    }
 
+
+    public void actionPerformed(ActionEvent ae){
+    		if(ae.getSource()==button1){
+    			Boolean status = false;
+				try {
+                    conn con = new conn();
+                    String sql = "select * from user where User_id=? and Password=?";
+                    PreparedStatement st = con.c.prepareStatement(sql);
+
+                    st.setString(1, textField.getText());
+                    st.setString(2,calculateBlockHash(passwordField.getText()));
+
+                    int uid=Integer.parseInt(textField.getText());
+                    ResultSet rs = st.executeQuery();
+                    if (rs.next()) {
+                        this.setVisible(false);
+                        menu m =new menu(uid); 
+                        m.setVisible(true);
+                    } else
+						JOptionPane.showMessageDialog(null, "Invalid Login...!.");
+                }
+		 		catch (Exception e) {
+                    e.printStackTrace();
+					}
     		}   
     		if(ae.getSource()==button2){
     			this.setVisible(false);
     			new signup().setVisible(true);
     		}
     	} 
-    	catch(Exception e){System.out.println(e);}
-    }
 
   	public static void main(String[] args) {
         new login().setVisible(true);

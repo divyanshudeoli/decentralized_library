@@ -6,18 +6,18 @@ import java.util.*;
 import java.awt.event.*;
 import java.sql.*;
 
-public class AddBook extends JFrame implements ActionListener {
-	private int uid=1,id;
-	private int points;
-	private String suid;
+public class request extends JFrame implements ActionListener {
+
     private JPanel contentPane;
-    private JTextField tbookid,tname,tgenre,tpublisher,tprice,tx,tuid,tauthor,tisbn,tedition,tlang,ty,tpg;
+    private JTextField tbookid,tname,tgenre,tpublisher,tpoints,tx,ty,tuid,tauthor,tcontact,tedition,tlang,tcondition,tpg;
     private JButton button1,button2;
     JComboBox comboBox;
+    private int uid,bid,ubid,cost;
     
 
-    public AddBook(int uid) {
-    	this.uid=uid;
+    public request(int uid,int bid) {
+        this.uid=uid;
+        this.bid=bid;
         setBounds(600, 300, 600, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(76, 133, 199));
@@ -30,7 +30,7 @@ public class AddBook extends JFrame implements ActionListener {
 		l1.setBounds(60, 84, 90, 22);
 		contentPane.add(l1);
 
-		JLabel l10 = new JLabel("Author");
+		JLabel l10 = new JLabel("Contact");
 		l10.setForeground(new Color(0,0,0));
 		l10.setFont(new Font("Tahoma", Font.BOLD, 14));
 		l10.setBounds(330, 84, 90, 22);
@@ -54,13 +54,13 @@ public class AddBook extends JFrame implements ActionListener {
 		l2.setBounds(60, 117, 90, 22);
 		contentPane.add(l2);
 
-		JLabel l13 = new JLabel("ISBN");
+		JLabel l13 = new JLabel("Author");
 		l13.setForeground(new Color(0,0,0));
 		l13.setFont(new Font("Tahoma", Font.BOLD, 14));
 		l13.setBounds(330, 117, 90, 22);
 		contentPane.add(l13);
 
-		JLabel l4 = new JLabel("Price");
+		JLabel l4 = new JLabel("Points");
 		l4.setForeground(new Color(0,0,0));
 		l4.setFont(new Font("Tahoma", Font.BOLD, 14));
 		l4.setBounds(60, 216, 90, 22);
@@ -72,7 +72,7 @@ public class AddBook extends JFrame implements ActionListener {
 		l14.setBounds(330, 216, 90, 22);
 		contentPane.add(l14);
 
-		/*JLabel l5 = new JLabel("Location: X");
+		JLabel l5 = new JLabel("Location: X");
 		l5.setForeground(new Color(0,0,0));
 		l5.setFont(new Font("Tahoma", Font.BOLD, 14));
 		l5.setBounds(60, 249, 90, 22);
@@ -82,7 +82,7 @@ public class AddBook extends JFrame implements ActionListener {
 		l9.setForeground(new Color(0,0,0));
 		l9.setFont(new Font("Tahoma", Font.BOLD, 14));
 		l9.setBounds(330, 249, 90, 22);
-		contentPane.add(l9);*/
+		contentPane.add(l9);
 
 		JLabel l6 = new JLabel("Book_id");
 		l6.setForeground(new Color(0,0,0));
@@ -136,43 +136,48 @@ public class AddBook extends JFrame implements ActionListener {
 		tpublisher.setBounds(160, 153, 100, 20);
 		contentPane.add(tpublisher);
 
-		tprice = new JTextField();
-		tprice.setForeground(new Color(0,0,0));
-		tprice.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		tprice.setColumns(10);
-		tprice.setBounds(160, 219, 100, 20);
-		contentPane.add(tprice);
+		tcondition = new JTextField();
+		tcondition.setForeground(new Color(0,0,0));
+		tcondition.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tcondition.setColumns(10);
+		tcondition.setBounds(160, 186, 100, 20);
+		contentPane.add(tcondition);
 
-		/*tx = new JTextField();
+		tpoints = new JTextField();
+		tpoints.setForeground(new Color(0,0,0));
+		tpoints.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tpoints.setColumns(10);
+		tpoints.setBounds(160, 219, 100, 20);
+		contentPane.add(tpoints);
+
+		tx = new JTextField();
 		tx.setForeground(new Color(0,0,0));
 		tx.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
 		tx.setColumns(10);
 		tx.setBounds(160, 252, 100, 20);
-		contentPane.add(tx);*/
+		contentPane.add(tx);
 
-
+		
 		tuid = new JTextField();
 		tuid.setForeground(new Color(0,0,0));
 		tuid.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
 		tuid.setBounds(400, 54, 100, 20);
 		contentPane.add(tuid);
 		tuid.setColumns(10);
-		suid=String.valueOf(uid);
-		tuid.setText(suid);
+
+		tcontact = new JTextField();
+		tcontact.setForeground(new Color(0,0,0));
+		tcontact.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		tcontact.setColumns(10);
+		tcontact.setBounds(400, 87, 100, 20);
+		contentPane.add(tcontact);
 
 		tauthor = new JTextField();
 		tauthor.setForeground(new Color(0,0,0));
 		tauthor.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
 		tauthor.setColumns(10);
-		tauthor.setBounds(400, 87, 100, 20);
-		contentPane.add(tauthor);
-
-		tisbn = new JTextField();
-		tisbn.setForeground(new Color(0,0,0));
-		tisbn.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		tisbn.setColumns(10);
-		tisbn.setBounds(400, 120, 100, 20);
-		contentPane.add(tisbn);
+		tauthor.setBounds(400, 120, 100, 20);
+		contentPane.add(tauthor);		
 
 		tedition = new JTextField();
 		tedition.setForeground(new Color(0,0,0));
@@ -186,14 +191,7 @@ public class AddBook extends JFrame implements ActionListener {
 		tlang.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
 		tlang.setColumns(10);
 		tlang.setBounds(400, 219, 100, 20);
-		contentPane.add(tlang);
-
-		/*ty = new JTextField();
-		ty.setForeground(new Color(0,0,0));
-		ty.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		ty.setColumns(10);
-		ty.setBounds(400, 252, 100, 20);
-		contentPane.add(ty);*/
+		contentPane.add(tlang);		
 
 		tpg = new JTextField();
 		tpg.setForeground(new Color(0,0,0));
@@ -202,13 +200,14 @@ public class AddBook extends JFrame implements ActionListener {
 		tpg.setBounds(400, 186, 100, 20);
 		contentPane.add(tpg);
 
-		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "New", "Fine", "Very Good",
-															 "Good", "Fair", "Poor", "Very Poor"}));
-		comboBox.setBounds(160, 186, 100, 20);
-		contentPane.add(comboBox);
+		ty = new JTextField();
+		ty.setForeground(new Color(0,0,0));
+		ty.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		ty.setColumns(10);
+		ty.setBounds(400, 252, 100, 20);
+		contentPane.add(ty);
 
-	    button1 = new JButton("Add");
+	    button1 = new JButton("Request");
 		button1.setBorder(new CompoundBorder(new LineBorder(new Color(128, 128, 128)), null));
 	    button1.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
 		button1.setBounds(180, 300, 108, 33);
@@ -224,88 +223,71 @@ public class AddBook extends JFrame implements ActionListener {
 	    button2.setBackground(Color.BLACK);
 	    button2.setForeground(Color.WHITE);
 		button2.addActionListener(this);
-
 		contentPane.add(button2);
-		addid();
+
+		fillbookdetails();
+		filluserdetails();
     }
 
-    public void calculatepoints(){
-    	int price=Integer.parseInt(tprice.getText());
-    	points=price*(10-comboBox.getSelectedIndex())/9;
-    }
-
-    public void actionPerformed(ActionEvent ae){
+    public void fillbookdetails(){
     	try{
     		conn con=new conn();
-    		if(ae.getSource()==button1){
-
-    			String sql = "insert into book(Book_id, Name, ISBN, Publisher,Condit, Points , Pages, User_id, Genre, Language, Author, Edition) values(?,?,?,?, ?, ?, ?, ?, ?, ?, ?, ?)";				
-				PreparedStatement st = con.c.prepareStatement(sql);
-				st.setString(1, tbookid.getText());
-				st.setString(2, tname.getText());
-				st.setString(3, tisbn.getText());
-				st.setString(4, tpublisher.getText());
-				st.setString(5, (String) comboBox.getSelectedItem());
-				calculatepoints();
-				st.setInt(6, points);
-				st.setString(7, tpg.getText());
-				st.setString(8, tuid.getText());
-				st.setString(9, tgenre.getText());
-				st.setString(10, tlang.getText());
-				st.setString(11, tauthor.getText());
-				st.setString(12, tedition.getText());
-				int rs = st.executeUpdate();
-
-				if (rs > 0){
-					String sql2=" update user set points=points+? where user_id=?";		            
-					String sp=String.valueOf(points);
-					String suid=String.valueOf(uid);
-					PreparedStatement st2=con.c.prepareStatement(sql2);
-					st2.setString(1,sp);
-					st2.setString(2,suid);
-					int rs2=st2.executeUpdate();
-		            if(rs2>0)JOptionPane.showMessageDialog(null, "Successfully Added");
-		        }
-				else
-		               JOptionPane.showMessageDialog(null, "Error");
-                tuid.setText("");
-                tbookid.setText("");
-                tauthor.setText("");
-                tedition.setText("");
-                tpg.setText("");
-                tprice.setText("");
-                tpublisher.setText("");
-                tlang.setText("");
-                tgenre.setText("");
-                tisbn.setText("");
-                tname.setText("");
-				st.close();
-    		}
-    	if(ae.getSource()==button2){
-    		this.setVisible(false);
-    		menu m=new menu(uid);
-    		m.setVisible(true);
-    	}
-
+    		String sql="select * from book where Book_id=?";
+    		String sbid=String.valueOf(bid);
+    		PreparedStatement st = con.c.prepareStatement(sql);
+			st.setString(1,sbid);
+			ResultSet rs=st.executeQuery();
+			if(rs.next()){
+				tbookid.setText(rs.getString(1));
+				tname.setText(rs.getString(2));
+				tgenre.setText(rs.getString(3));
+				tpublisher.setText(rs.getString(4));
+				tcondition.setText(rs.getString(5));
+				tpoints.setText(rs.getString(6));
+				cost=rs.getInt(6);
+				tuid.setText(rs.getString(7));
+				ubid=rs.getInt(7);
+				tauthor.setText(rs.getString(8));
+				tedition.setText(rs.getString(10));
+				tpg.setText(rs.getString(11));
+				tlang.setText(rs.getString(12));
+			}
+			else JOptionPane.showMessageDialog(null, "Error");
     	}
     	catch(Exception e){System.out.println(e);}
     }
 
+    public void filluserdetails(){
+    	try{
+    		conn con2=new conn();
+    		String sql="select contactno,x,y from user where User_id=?";
+    		String subid=String.valueOf(ubid);
+    		PreparedStatement st = con2.c.prepareStatement(sql);
+			st.setString(1,subid);
+			ResultSet rs=st.executeQuery();
+			if(rs.next()){
+				tcontact.setText(rs.getString(1));
+				tx.setText(rs.getString(2));
+				ty.setText(rs.getString(3));
+			}
+			else JOptionPane.showMessageDialog(null, "Not linked to valid user");
+    	}
+    	catch(Exception e){System.out.println(e);}
+    }
+
+
+    public void actionPerformed(ActionEvent ae){
+    		if(ae.getSource()==button1){
+   				transaction tran = new transaction(uid,bid,cost,ubid);
+    		}
+
+	    	if(ae.getSource()==button2){
+	    		this.setVisible(false);
+	    		search sear=new search(uid); 
+	    		sear.setVisible(true);
+	    	}
+    	}
+
     public static void main(String[] args) {
-		//new AddBook().setVisible(true);
-    }
-	public void addid() {
-        try{
-        	conn con1=new conn();
-        	String sql="select max(Book_id) from book";
-        	PreparedStatement st1=con1.c.prepareStatement(sql);
-        	ResultSet rs=st1.executeQuery();
-        	if(rs.next()){
-        		id =rs.getInt(1);
-        		id++;
-        		tbookid.setText(""+id);
-        	}
-        }catch(Exception e){System.out.println(e);}
-    }
-   
+    } 
 }

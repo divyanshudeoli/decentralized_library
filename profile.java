@@ -12,18 +12,18 @@ public class profile extends JFrame implements ActionListener {
     private JPanel contentPane;
     private JTextField tFuid;
     private JTextField tFuname;
-    private JTextField tFpassword;
+    private JPasswordField tFpassword;
     private JTextField tFcontact;
     private JTextField tFcoins;
     private JTextField tFX;
     private JTextField tFY;
     private JButton  b1;
     private JComboBox comboBox;
-    static int uid=1;
+    private int uid=1;
 
 
     public static void main(String[] args) {
-        new profile(uid).setVisible(true);
+        //new profile(uid).setVisible(true);
     }
 
     public profile(int uid) {
@@ -86,7 +86,7 @@ public class profile extends JFrame implements ActionListener {
 		tFuname.setBounds(265, 128, 148, 20);
 		contentPane.add(tFuname);
 
-	    tFpassword = new JTextField();
+	    tFpassword = new JPasswordField();
 		tFpassword.setColumns(10);
 		tFpassword.setBounds(265, 165, 148, 20);
 		contentPane.add(tFpassword);
@@ -129,11 +129,11 @@ public class profile extends JFrame implements ActionListener {
 				tFuid.setText(""+i);
 		        tFuid.setText(rs.getString(1));
 		        tFuname.setText(rs.getString(2));
-				tFpassword.setText("***********");
+				tFpassword.setText(rs.getString(3));
 				tFcontact.setText(rs.getString(5));
 				tFX.setText(rs.getString(6));
 				tFY.setText(rs.getString(7));
-				tFcoins.setText("0");
+				tFcoins.setText(rs.getString(8));
 			}
 		}catch(Exception e){ 
             System.out.println(e);
@@ -144,7 +144,8 @@ public class profile extends JFrame implements ActionListener {
         try{
 		    if(ae.getSource() == b1){
 		            this.setVisible(false);
-					new menu().setVisible(true);
+					menu m=new menu(uid);
+					m.setVisible(true);
 		        }
 		        }catch(Exception e){}
     		}

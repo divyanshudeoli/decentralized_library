@@ -10,8 +10,10 @@ public class search extends JFrame implements ActionListener{
 	private JPanel contentPane;
     private JTextField tdist,tbid,tbname,tauthor;
     private JButton sdist,sbid,sname,sauthor,bback;
+    private int uid,bid;
 
-    public search(){
+    public search(int uid){
+    	this.uid=uid;
     	setBounds(600, 300, 600, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(76, 133, 199));
@@ -36,11 +38,11 @@ public class search extends JFrame implements ActionListener{
 		lbauthor.setBounds(40, 174, 110, 27);
 		contentPane.add(lbauthor);
 
-		JLabel lbdist = new JLabel("Distance");
+		/*JLabel lbdist = new JLabel("Distance");
 		lbdist.setForeground(new Color(0,0,0));
 		lbdist.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lbdist.setBounds(40, 219, 110, 27);
-		contentPane.add(lbdist);
+		contentPane.add(lbdist);*/
 
 		tbid = new JTextField();
 		tbid.setForeground(new Color(0,0,0));
@@ -97,14 +99,14 @@ public class search extends JFrame implements ActionListener{
 		contentPane.add(sauthor);
 		sauthor.addActionListener(this);
 
-		sdist = new JButton("Search");
+		/*sdist = new JButton("Search");
 		sdist.setBorder(new CompoundBorder(new LineBorder(new Color(105, 105, 105)), null));
 		sdist.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
 		sdist.setBounds(400, 219, 110,27);
 	    sdist.setBackground(new Color(3, 87, 255));
 	    sdist.setForeground(Color.WHITE);
 		sdist.addActionListener(this);
-		contentPane.add(sdist);
+		contentPane.add(sdist);*/
 
 		bback = new JButton("Back");
 		bback.setBorder(new CompoundBorder(new LineBorder(new Color(105, 105, 105)), null));
@@ -115,24 +117,60 @@ public class search extends JFrame implements ActionListener{
 		bback.addActionListener(this);
 
 		contentPane.add(bback);
-
-
-
     }
+
+
 	public void actionPerformed(ActionEvent ae){
     	try{
     		if(ae.getSource()==bback){
     			this.setVisible(false);
-					new menu().setVisible(true);
-		        }
-		    if(ae.getSource()==)
-    		}
+				menu m=new menu(uid);
+				m.setVisible(true);
+		    }
+
+		    if(ae.getSource()==sbid){
+		    	bid=Integer.parseInt(tbid.getText());
+		    	this.setVisible(false);
+		    	request reqid=new request(uid,bid);
+		    	reqid.setVisible(true);
+		    }
+
+		    if(ae.getSource()==sname){
+					conn con = new conn();
+			        String sql = "select Book_id from book where name=?";
+					PreparedStatement st = con.c.prepareStatement(sql);
+					st.setString(1, tbname.getText());
+					ResultSet rs=st.executeQuery();
+					if(rs.next()) {
+						bid=rs.getInt(1);
+						this.setVisible(false);
+				    	request reqname=new request(uid,bid);
+				    	reqname.setVisible(true);			
+					}
+				    else JOptionPane.showMessageDialog(null, "Error");
+			}
+
+    		if(ae.getSource()==sauthor){
+    				conn con = new conn();
+			        String sql = "select Book_id from book where author=?";
+					PreparedStatement st = con.c.prepareStatement(sql);
+					st.setString(1, tbname.getText());
+					ResultSet rs=st.executeQuery();
+					if(rs.next()) {
+						bid=rs.getInt(1);
+						this.setVisible(false);
+				    	request reqauth=new request(uid,bid);
+				    	reqauth.setVisible(true);			
+					}
+				    else JOptionPane.showMessageDialog(null, "Error");
+			}
+    	}
     	catch(Exception e){System.out.println(e);}
     }
 
 
     public static void main(String[] args) {
-    	new search().setVisible(true);
+    	//new search().setVisible(true);
     }
 
 }
